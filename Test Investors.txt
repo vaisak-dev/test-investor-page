@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Relations | Canarys Automations Limited</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --navy:#0D1B35;
+    --navy-soft:#16264c;
+    --navy-line: rgba(13,27,53,0.12);
+    --gold:#FFBF47;
+    --gold-dark:#B8872A;
+    --chalk:#F6F5F1;
+    --white:#FFFFFF;
+    --ink:#0D1B35;
+    --ink-muted:#5B6478;
+    --serif:'Cormorant Garamond', serif;
+    --sans:'Outfit', sans-serif;
+    --mono:'DM Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  img{max-width:100%;display:block;}
+  p{margin:0 0 8px;}
+
+  /* ===== Bootstrap-equivalent grid (container-lg / row / col-*) ===== */
+  .container-lg{width:100%;max-width:1140px;margin:0 auto;padding:0 15px;}
+  .row{display:flex;flex-wrap:wrap;margin:0 -15px;}
+  .col-md-12{flex:0 0 100%;max-width:100%;padding:0 15px;}
+  .col-lg-3{padding:0 15px;flex:0 0 100%;max-width:100%;}
+  .col-md-4{padding:0 15px;}
+  .col-lg-9{padding:0 15px;flex:0 0 100%;max-width:100%;}
+  .col-md-8{padding:0 15px;}
+  .col-xl-6{padding:0 15px;flex:0 0 100%;max-width:100%;}
+  .col-lg-4{padding:0 15px;flex:0 0 100%;max-width:100%;}
+  @media (min-width:768px){
+    .col-md-4{flex:0 0 33.3333%;max-width:33.3333%;}
+    .col-md-8{flex:0 0 66.6667%;max-width:66.6667%;}
+    .col-md-6{flex:0 0 50%;max-width:50%;}
+  }
+  @media (min-width:992px){
+    .col-lg-3{flex:0 0 25%;max-width:25%;}
+    .col-lg-9{flex:0 0 75%;max-width:75%;}
+    .col-lg-4{flex:0 0 33.3333%;max-width:33.3333%;}
+  }
+  @media (min-width:1200px){
+    .col-xl-6{flex:0 0 50%;max-width:50%;}
+  }
+
+  /* ===== Inner banner (hero) ===== */
+  .innerbanner{background:linear-gradient(180deg, var(--navy) 0%, var(--navy-soft) 100%);padding:64px 0;}
+  .innerbanner .cmn-inner h1{font-family:var(--serif);font-weight:600;font-size:42px;color:var(--white);margin:0 0 16px;}
+  .innerbanner .cmn-inner p{max-width:760px;color:rgba(255,255,255,0.72);font-size:15.5px;line-height:1.75;margin:0;}
+
+  /* ===== Posting section: sidebar + right content ===== */
+  .posting{padding:56px 0 72px;}
+  .invAside{margin-bottom:40px;}
+  .job-secc .filter{}
+  .filter-item{border-bottom:1px solid var(--navy-line);padding:16px 0;}
+  .filter-item:first-child{padding-top:0;}
+  .fz_24{
+    display:flex;align-items:center;justify-content:space-between;cursor:pointer;
+    font-family:var(--serif);font-weight:600;font-size:20px;color:var(--navy);margin-bottom:0;
+    padding:4px 0;user-select:none;
+  }
+  .fz_24:hover{color:var(--gold-dark);}
+  .fz_24.show{color:var(--gold-dark);}
+  .fz_24 .caret{font-family:var(--sans);font-size:13px;color:var(--ink-muted);transition:transform .25s ease;flex:none;margin-left:12px;}
+  .filter-item.is-open .fz_24 .caret{transform:rotate(180deg);color:var(--gold-dark);}
+  .filterList{
+    margin-top:0;max-height:0;overflow:hidden;
+    transition:max-height .3s ease, margin-top .3s ease;
+  }
+  .filter-item.is-open .filterList{margin-top:10px;}
+  .filterList li{display:flex;align-items:center;gap:10px;padding:6px 0;}
+  .filterList li a{font-size:13.5px;color:var(--ink-muted);line-height:1.4;cursor:pointer;}
+  .filterList li a:hover{color:var(--gold-dark);}
+  .filterList li.checked_li a{color:var(--gold-dark);font-weight:500;}
+  .carrer{position:relative;display:inline-flex;flex:none;width:16px;height:16px;cursor:default;}
+  .carrer input{opacity:0;position:absolute;width:16px;height:16px;margin:0;}
+  .checkmark{position:absolute;top:0;left:0;width:16px;height:16px;border:1px solid var(--navy-line);border-radius:3px;background:var(--white);}
+  .carrer input:checked ~ .checkmark{background:var(--gold);border-color:var(--gold-dark);}
+  .carrer input:checked ~ .checkmark::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:8px;border:solid var(--navy);border-width:0 2px 2px 0;transform:rotate(45deg);}
+
+  .investor-right h2{display:none;}
+  .investor-right .row{display:grid;grid-template-columns:1fr;gap:22px;margin:0;padding:0;}
+  @media (min-width:1200px){
+    .investor-right .row{grid-template-columns:repeat(2,1fr);}
+  }
+  .irContent{
+    list-style:none;flex:none;max-width:none;width:auto;padding:30px 32px;margin:0;
+    background:var(--white);border:1px solid var(--navy-line);border-left:3px solid var(--gold);
+    border-radius:6px;box-shadow:0 2px 10px rgba(13,27,53,0.05);
+    transition:box-shadow .25s ease, transform .25s ease;
+  }
+  .irContent:hover{box-shadow:0 10px 26px rgba(13,27,53,0.09);transform:translateY(-2px);}
+  .irContent h3{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;color:var(--gold-dark);margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid var(--navy-line);min-height:0;}
+  .irContent h3:empty{display:none;margin:0;padding:0;border:none;}
+  .bodBox2 h4{font-family:var(--serif);font-size:22px;font-weight:600;margin:0 0 10px;color:var(--navy);}
+  .bodBox2 p{font-size:13.5px;line-height:1.75;color:var(--ink-muted);}
+  .bodBox2 p.call{display:flex;align-items:flex-start;gap:10px;margin:8px 0;}
+  .bodBox2 p.call i{color:var(--gold-dark);width:14px;margin-top:3px;font-size:12px;}
+  .bodBox2 p.call a{color:var(--gold-dark);font-weight:500;}
+  .bodBox2 p.call a:hover{text-decoration:underline;}
+  .bodBox2 p a{color:var(--gold-dark);}
+
+  /* ===== Contact / Get in touch section ===== */
+  .contact_sec{background:var(--chalk);padding:64px 0;}
+  .page-heading h2{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-dark);margin:0 0 8px;}
+  .page-heading h3{font-family:var(--serif);font-weight:600;font-size:32px;margin:0 0 14px;color:var(--navy);}
+  .contact_txt p{max-width:680px;color:var(--ink-muted);font-size:15px;line-height:1.75;margin-bottom:32px;}
+
+  .contact_frm{display:flex;flex-wrap:wrap;margin:0 -8px;}
+  .contact_input{padding:0 8px;margin-bottom:16px;width:100%;}
+  .w_33{width:100%;}
+  .w_50{width:100%;}
+  .w_100{width:100%;}
+  @media (min-width:768px){
+    .w_33{width:33.3333%;}
+    .w_50{width:50%;}
+  }
+  .contact_input input,.contact_input select,.contact_input textarea{
+    width:100%;background:var(--white);border:1px solid var(--navy-line);padding:12px 14px;
+    color:var(--ink);font-family:var(--sans);font-size:13.5px;outline:none;border-radius:2px;
+  }
+  .contact_input input:focus,.contact_input select:focus,.contact_input textarea:focus{border-color:var(--gold-dark);}
+  .contact_input textarea{resize:vertical;min-height:110px;}
+  .captch_input{display:flex;align-items:center;gap:14px;}
+  .captch_input img{border-radius:2px;}
+  .captcha-box{font-family:var(--mono);letter-spacing:0.3em;background:var(--navy);color:var(--gold);padding:12px 18px;border-radius:2px;font-size:13px;flex:none;}
+  .contact_submit{background:var(--gold);color:var(--navy);border:none;padding:13px 32px;font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:0.02em;cursor:pointer;border-radius:2px;width:auto!important;}
+  .contact_submit:hover{background:var(--gold-dark);color:var(--white);}
+
+  .caret i{font-size:11px;}
+
+  /* ==============================================================
+     SITE HEADER + FOOTER — matched to ecanarys.com
+     Namespaced tokens (--hf-*) so nothing here touches the
+     investor page's own design tokens or layout above.
+     ============================================================== */
+  :root{
+    --hf-ink:#09111F;
+    --hf-navy:#0D1B35;
+    --hf-gold:#B8872A;
+    --hf-glt:#D4A84B;
+    --hf-chalk:#F6F5F1;
+    --hf-white:#FFFFFF;
+    --hf-mist:#EEF0F5;
+    --hf-steel:#7A8499;
+    --hf-rule:rgba(9,17,31,.09);
+  }
+  body{padding-top:60px;}
+
+  /* ── Header nav ── */
+  #siteNav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;background:rgba(246,245,241,.94);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--hf-rule);font-family:var(--sans);}
+  #siteNav .hf-logo{display:flex;align-items:center;}
+  #siteNav .hf-logo img{height:40px;object-fit:contain;filter:brightness(0.15);}
+  #siteNav .hf-nav-r{display:flex;align-items:center;gap:2rem;}
+  #siteNav .hf-nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center;margin:0;padding:0;}
+  #siteNav .hf-nav-links>li>a{font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--hf-steel);transition:color .2s;cursor:pointer;}
+  #siteNav .hf-nav-links>li>a:hover{color:var(--hf-gold);}
+  #siteNav .hf-nav-links>li>a.is-active{color:var(--hf-gold);}
+  #siteNav .hf-nav-btn{font-family:var(--sans);font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--hf-ink);border:1.5px solid var(--hf-ink);padding:.42rem 1.2rem;background:transparent;cursor:pointer;transition:all .25s;}
+  #siteNav .hf-nav-btn:hover{background:var(--hf-gold);border-color:var(--hf-gold);color:#fff;}
+  #siteNav .hf-nav-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:.3rem;}
+  #siteNav .hf-nav-toggle span{width:22px;height:1.5px;background:var(--hf-ink);transition:.3s;}
+
+  /* Investor mega-menu inside header nav */
+  #siteNav .hf-inv-wrap{position:relative;}
+  #siteNav .hf-inv-wrap>a::after{content:'\25BE';margin-left:.3rem;font-size:.55rem;}
+  #siteNav .hf-inv-mega{position:absolute;top:calc(100% + 1.2rem);right:-200px;width:820px;background:var(--hf-white);border:1px solid var(--hf-rule);box-shadow:0 12px 40px rgba(9,17,31,.12);padding:2rem 2.2rem;display:none;z-index:600;max-height:80vh;overflow-y:auto;}
+  #siteNav .hf-inv-wrap:hover .hf-inv-mega{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;}
+  #siteNav .hf-inv-mega-col h5{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hf-gold);margin:0 0 .7rem;padding-bottom:.4rem;border-bottom:1px solid var(--hf-rule);}
+  #siteNav .hf-inv-mega-col ul{list-style:none;display:flex;flex-direction:column;gap:.3rem;margin:0 0 1.2rem;padding:0;}
+  #siteNav .hf-inv-mega-col a{font-size:.74rem;font-weight:300;color:var(--hf-steel);transition:color .15s;display:block;padding:.15rem 0;line-height:1.4;}
+  #siteNav .hf-inv-mega-col a:hover{color:var(--hf-gold);}
+  #siteNav .hf-inv-mega-col .hf-inv-sub{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--hf-steel);margin-top:.6rem;margin-bottom:.3rem;opacity:.6;}
+
+  @media (max-width:900px){
+    #siteNav{padding:0 5vw;}
+    #siteNav .hf-nav-links{position:fixed;top:60px;left:0;right:0;flex-direction:column;background:var(--hf-chalk);padding:1rem 5vw 2rem;gap:0;border-bottom:1px solid var(--hf-rule);display:none;align-items:stretch;max-height:calc(100vh - 60px);overflow-y:auto;}
+    #siteNav .hf-nav-links.is-open{display:flex;}
+    #siteNav .hf-nav-links>li>a{padding:.9rem 0;display:block;border-bottom:1px solid var(--hf-rule);}
+    #siteNav .hf-inv-mega{position:static;width:auto;right:auto;background:transparent;border:none;box-shadow:none;padding:.4rem 0 .8rem;max-height:none;display:none;}
+    #siteNav .hf-inv-wrap.is-open .hf-inv-mega{display:block;grid-template-columns:1fr;}
+    #siteNav .hf-inv-wrap:hover .hf-inv-mega{display:none;}
+    #siteNav .hf-inv-wrap.is-open .hf-inv-mega{display:grid;grid-template-columns:1fr;}
+    #siteNav .hf-nav-btn{display:none;}
+    #siteNav .hf-nav-toggle{display:flex;}
+  }
+
+  /* ── Footer ── */
+  #siteFooter{background:var(--hf-ink);padding:3.5rem 5vw 2rem;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:start;font-family:var(--sans);}
+  #siteFooter .hf-f-brand img{height:42px;margin-bottom:1rem;}
+  #siteFooter .hf-f-tag{font-size:.76rem;font-weight:300;color:rgba(255,255,255,.22);max-width:300px;line-height:1.6;}
+  #siteFooter .hf-f-nav{display:flex;gap:2.4rem;flex-wrap:wrap;}
+  #siteFooter .hf-fc h4{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--hf-gold);margin:0 0 1rem;}
+  #siteFooter .hf-fc ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin:0;padding:0;}
+  #siteFooter .hf-fc a{font-size:.8rem;font-weight:300;color:rgba(255,255,255,.3);transition:color .2s;}
+  #siteFooter .hf-fc a:hover{color:rgba(255,255,255,.65);}
+  #siteFooter .hf-f-bottom{grid-column:1/-1;padding-top:1.8rem;margin-top:1rem;border-top:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--mono);font-size:.62rem;color:rgba(255,255,255,.18);flex-wrap:wrap;}
+  @media (max-width:900px){
+    #siteFooter{grid-template-columns:1fr;gap:2.5rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav id="siteNav">
+  <a href="https://ecanarys.com/" class="hf-logo">
+    <img src="https://ecanarys.com/assets/images/canarys-logo.png" alt="Canarys">
+  </a>
+  <div class="hf-nav-r">
+    <ul class="hf-nav-links" id="hfNavLinks">
+      <li><a href="https://ecanarys.com/#about">About</a></li>
+      <li><a href="https://ecanarys.com/#partners">Partners</a></li>
+      <li><a href="https://ecanarys.com/#car">CAR Framework</a></li>
+      <li><a href="https://ecanarys.com/#services">Services</a></li>
+      <li><a href="https://ecanarys.com/#consulting">Consulting</a></li>
+      <li><a href="https://ecanarys.com/#proof">Work</a></li>
+      <li><a href="https://ecanarys.com/#products">Products</a></li>
+      <li class="hf-inv-wrap" id="hfInvWrap"><a class="is-active" onclick="if(window.matchMedia('(max-width:900px)').matches){document.getElementById('hfInvWrap').classList.toggle('is-open');}">Investor</a>
+        <div class="hf-inv-mega">
+          <div class="hf-inv-mega-col">
+            <h5>Prospectus &amp; Filings</h5>
+            <ul>
+              <li><a href="https://ecanarys.com/Red-Herring-Prospectus.pdf" target="_blank" rel="noopener">Red Herring Prospectus</a></li>
+              <li><a href="https://ecanarys.com/Investors-DRHP.pdf" target="_blank" rel="noopener">DRHP</a></li>
+            </ul>
+            <h5>Financial Statements</h5>
+            <ul>
+              <li><a href="https://ecanarys.com/Investors-Group-Companies.pdf" target="_blank" rel="noopener">Group Companies</a></li>
+              <li><a href="https://ecanarys.com/Investors-CHAT-Financials.pdf" target="_blank" rel="noopener">CHAT Financials</a></li>
+              <li><a href="https://ecanarys.com/Investors-Annual-Report-2021-22.pdf" target="_blank" rel="noopener">Financial Statements 2021-22</a></li>
+              <li><a href="https://ecanarys.com/Investors-Annual-Report-2022-23.pdf" target="_blank" rel="noopener">Financial Statements 2022-23</a></li>
+              <li><a href="https://ecanarys.com/Investors-Company-RFS.pdf" target="_blank" rel="noopener">Company RFS</a></li>
+            </ul>
+            <div class="hf-inv-sub">Subsidiary — Canarys Corp</div>
+            <ul>
+              <li><a href="https://ecanarys.com/Investors-Canarys-Corp.pdf" target="_blank" rel="noopener">Canarys Corp</a></li>
+              <li><a href="https://ecanarys.com/Investors-Canarys-Corp-Annual-Report-2020-21.pdf" target="_blank" rel="noopener">Financials 2020-21</a></li>
+              <li><a href="https://ecanarys.com/Investors-Canarys-Corp-Annual-Report-2021-22.pdf" target="_blank" rel="noopener">Financials 2021-22</a></li>
+              <li><a href="https://ecanarys.com/Investors-Canarys-Corp-Annual-Report-2022-23.pdf" target="_blank" rel="noopener">Financials 2022-23</a></li>
+            </ul>
+            <div class="hf-inv-sub">Subsidiary — Canarys APAC Pte Ltd</div>
+            <ul>
+              <li><a href="https://ecanarys.com/Investors-Canarys-APAC-Pte-Ltd-2021-22.pdf" target="_blank" rel="noopener">Financials 2021-22</a></li>
+              <li><a href="https://ecanarys.com/Investors-Canarys-APAC-Pte-Ltd-2022-23.pdf" target="_blank" rel="noopener">Financials 2022-23</a></li>
+            </ul>
+          </div>
+          <div class="hf-inv-mega-col">
+            <h5>Corporate Governance</h5>
+            <ul>
+              <li><a href="https://ecanarys.com/Investors-CSR-Policy.pdf" target="_blank" rel="noopener">CSR Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Dividend-Distribution-Policy.pdf" target="_blank" rel="noopener">Dividend Distribution Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Whistle-Blower-Policy.pdf" target="_blank" rel="noopener">Whistle Blower Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Policy-on-POSH.pdf" target="_blank" rel="noopener">Policy on POSH</a></li>
+              <li><a href="https://ecanarys.com/Investors-Risk-Management-Policy.pdf" target="_blank" rel="noopener">Risk Management Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Preservation-of-Records-Policy.pdf" target="_blank" rel="noopener">Preservation of Records Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Disclosure-of-Materiality-Policy.pdf" target="_blank" rel="noopener">Disclosure of Materiality Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Material-Subsidiary-Policy.pdf" target="_blank" rel="noopener">Material Subsidiary Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Policy-on-Related-Party.pdf" target="_blank" rel="noopener">Policy on Related Party</a></li>
+              <li><a href="https://ecanarys.com/Investors-Board-Diversity-Policy.pdf" target="_blank" rel="noopener">Board Diversity Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Nomination-and-Remuneration-Policy.pdf" target="_blank" rel="noopener">Nomination &amp; Remuneration Policy</a></li>
+              <li><a href="https://ecanarys.com/Investors-Policy-on-Code-of-Conduct.pdf" target="_blank" rel="noopener">Policy on Code of Conduct</a></li>
+              <li><a href="https://ecanarys.com/CANARYS-EMPLOYEE-STOCK-OPTION-SCHEME.pdf" target="_blank" rel="noopener">Employee Stock Option Scheme</a></li>
+            </ul>
+            <h5>Material Contracts</h5>
+            <ul>
+              <li><a href="https://ecanarys.com/Issue-Agreement-with-BRLM.pdf" target="_blank" rel="noopener">Issue Agreement with BRLM</a></li>
+              <li><a href="https://ecanarys.com/Agreement-with-Company-and-Registrar-to-Issue.pdf" target="_blank" rel="noopener">Agreement — Registrar to Issue</a></li>
+              <li><a href="https://ecanarys.com/Tripartite-Agreement-NSDL.pdf" target="_blank" rel="noopener">Tripartite Agreement — NSDL</a></li>
+              <li><a href="https://ecanarys.com/Tripartite-Agreement-CDSL.pdf" target="_blank" rel="noopener">Tripartite Agreement — CDSL</a></li>
+              <li><a href="https://ecanarys.com/Banker-to-Issue-Agreement.pdf" target="_blank" rel="noopener">Banker to Issue Agreement</a></li>
+              <li><a href="https://ecanarys.com/Market-Maker-Agreement.pdf" target="_blank" rel="noopener">Market Maker Agreement</a></li>
+              <li><a href="https://ecanarys.com/Syndicate-Agreement.pdf" target="_blank" rel="noopener">Syndicate Agreement</a></li>
+              <li><a href="https://ecanarys.com/Underwriter-Agreement.pdf" target="_blank" rel="noopener">Underwriter Agreement</a></li>
+            </ul>
+          </div>
+          <div class="hf-inv-mega-col">
+            <h5>Material Documents</h5>
+            <div class="hf-inv-sub">Certificates of Incorporation</div>
+            <ul>
+              <li><a href="https://ecanarys.com/Certificate-of-Incorporation-1-7-1991.pdf" target="_blank" rel="noopener">COI — 1-7-1991</a></li>
+              <li><a href="https://ecanarys.com/COI-Pvt-to-Deemed-Public.pdf" target="_blank" rel="noopener">COI — Pvt to Deemed Public</a></li>
+              <li><a href="https://ecanarys.com/COI-Deemed-Public-to-Private-20-06-2000.pdf" target="_blank" rel="noopener">COI — Deemed Public to Private</a></li>
+              <li><a href="https://ecanarys.com/COI-Private-to-public-2006.pdf" target="_blank" rel="noopener">COI — Private to Public 2006</a></li>
+              <li><a href="https://ecanarys.com/COI-Public-to-private-2007.pdf" target="_blank" rel="noopener">COI — Public to Private 2007</a></li>
+              <li><a href="https://ecanarys.com/Certificate-of-Incorporation-27-06-2023.pdf" target="_blank" rel="noopener">COI — 27-06-2023</a></li>
+              <li><a href="https://ecanarys.com/Articles-of-Association-AOA.pdf" target="_blank" rel="noopener">Articles of Association (AOA)</a></li>
+              <li><a href="https://ecanarys.com/Memorandum-of-Association-MOA.pdf" target="_blank" rel="noopener">Memorandum of Association (MOA)</a></li>
+            </ul>
+            <div class="hf-inv-sub">Board &amp; AGM Resolutions</div>
+            <ul>
+              <li><a href="https://ecanarys.com/BR-Approval-of-IPO.pdf" target="_blank" rel="noopener">BR — Approval of IPO</a></li>
+              <li><a href="https://ecanarys.com/AGM-Approval-of-IPO.pdf" target="_blank" rel="noopener">AGM — Approval of IPO</a></li>
+              <li><a href="https://ecanarys.com/Board-resolution-Approval-of-DRHP.pdf" target="_blank" rel="noopener">BR — Approval of DRHP</a></li>
+            </ul>
+            <div class="hf-inv-sub">Audited Financials</div>
+            <ul>
+              <li><a href="https://ecanarys.com/Financial-Statements-2020-21.pdf" target="_blank" rel="noopener">Financial Statements 2020-21</a></li>
+              <li><a href="https://ecanarys.com/Financial-Statements-2021-22.pdf" target="_blank" rel="noopener">Financial Statements 2021-22</a></li>
+              <li><a href="https://ecanarys.com/Financial-Statements-2022-23.pdf" target="_blank" rel="noopener">Financial Statements 2022-23</a></li>
+            </ul>
+            <div class="hf-inv-sub">Consent Letters</div>
+            <ul>
+              <li><a href="https://ecanarys.com/Consent-Letters-Promoters.pdf" target="_blank" rel="noopener">Promoters</a></li>
+              <li><a href="https://ecanarys.com/Consent-letters-Directors.pdf" target="_blank" rel="noopener">Directors</a></li>
+              <li><a href="https://ecanarys.com/Consent-Letter-KMP.pdf" target="_blank" rel="noopener">KMP</a></li>
+              <li><a href="https://ecanarys.com/Consent-Legal-Counsel.pdf" target="_blank" rel="noopener">Legal Counsel</a></li>
+              <li><a href="https://ecanarys.com/Consent-Statutory-Auditor.pdf" target="_blank" rel="noopener">Statutory Auditor</a></li>
+              <li><a href="https://ecanarys.com/Consent-RTA.pdf" target="_blank" rel="noopener">RTA</a></li>
+              <li><a href="https://ecanarys.com/Consent-Banker-to-the-Company.pdf" target="_blank" rel="noopener">Banker to the Company</a></li>
+              <li><a href="https://ecanarys.com/Consent-letter-Advisors-to-the-company.pdf" target="_blank" rel="noopener">Advisors</a></li>
+              <li><a href="https://ecanarys.com/Consent-from-BRLM.pdf" target="_blank" rel="noopener">BRLM</a></li>
+              <li><a href="https://ecanarys.com/Consent-letter-Market-Maker.pdf" target="_blank" rel="noopener">Market Maker</a></li>
+              <li><a href="https://ecanarys.com/Consent-letter-Syndicate-Member.pdf" target="_blank" rel="noopener">Syndicate Member</a></li>
+              <li><a href="https://ecanarys.com/Consent-letter-Banker-to-the-issue.pdf" target="_blank" rel="noopener">Banker to the Issue</a></li>
+            </ul>
+            <div class="hf-inv-sub">Other Documents</div>
+            <ul>
+              <li><a href="https://ecanarys.com/Peer-Review-Auditors-Report.pdf" target="_blank" rel="noopener">Peer Review Auditors Report</a></li>
+              <li><a href="https://ecanarys.com/Copy-of-statement-of-special-tax-benefits.pdf" target="_blank" rel="noopener">Special Tax Benefits</a></li>
+              <li><a href="https://ecanarys.com/Certificate-of-KPI.pdf" target="_blank" rel="noopener">Certificate of KPI</a></li>
+              <li><a href="https://ecanarys.com/Due-Diligence-Certificate.pdf" target="_blank" rel="noopener">Due Diligence Certificate</a></li>
+              <li><a href="https://ecanarys.com/In-principle-approval-letter-NSE.pdf" target="_blank" rel="noopener">In-principle Approval — NSE</a></li>
+              <li><a href="https://ecanarys.com/Nasscom-Industry-Report.pdf" target="_blank" rel="noopener">Nasscom Industry Report</a></li>
+            </ul>
+            <h5>Annual Return</h5>
+            <ul>
+              <li><a href="https://ecanarys.com/Form-MGT-7-Annual-Return-20-21.pdf" target="_blank" rel="noopener">MGT-7 — 2020-21</a></li>
+              <li><a href="https://ecanarys.com/Form-MGT-7-Annual-Return-21-22.pdf" target="_blank" rel="noopener">MGT-7 — 2021-22</a></li>
+              <li><a href="https://ecanarys.com/Form-MGT-7-AR-2022-23.pdf" target="_blank" rel="noopener">MGT-7 — 2022-23</a></li>
+              <li><a href="https://ecanarys.com/Form-MGT-7-AR-2023-24.pdf" target="_blank" rel="noopener">MGT-7 — 2023-24</a></li>
+              <li><a href="https://ecanarys.com/Form-MGT-7-AR-2024-25.pdf" target="_blank" rel="noopener">MGT-7 — 2024-25</a></li>
+            </ul>
+            <h5>More</h5>
+            <ul>
+              <li><a href="https://ecanarys.com/statutory-filings/">Statutory Filings</a></li>
+              <li><a href="https://ecanarys.com/investor-presentations/">Investor Presentations</a></li>
+            </ul>
+            <h5>Regulation 46</h5>
+            <ul>
+              <li><a href="https://ecanarys.com/audio-or-video-recordings-of-post-earnings-calls/">Audio / Video Recordings</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <button class="hf-nav-btn" onclick="document.getElementById('footContact').scrollIntoView({behavior:'smooth'})">Speak With Us</button>
+    <button class="hf-nav-toggle" aria-label="Menu" aria-expanded="false" onclick="var n=document.getElementById('hfNavLinks');var o=n.classList.toggle('is-open');this.setAttribute('aria-expanded',o);">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="innerbanner investor">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="cmn-inner">
+          <h1 class="h2">Investor Relations</h1>
+          <p>We ensure transparency and active dialogue with our investors and shareholders, which is a reflection of our ethical conduct and strong corporate governance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="posting investor">
+  <div class="container-lg">
+    <div class="row invRow">
+
+      <!-- ===== Sidebar ===== -->
+      <div class="col-lg-3 col-md-4 invAside">
+        <div class="job-secc">
+          <ul class="filter ul-reset">
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Financial Statements<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#financial-statements">2022-2023</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#financial-statements">2023-2024</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#financial-statements">2024-2025</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#financial-statements">2025-2026</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Subsidiary Companies<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#subsidiary-companies">Canarys Corp</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#subsidiary-companies">Canarys APAC PTE LTD</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#subsidiary-companies">Fortira Inc</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Annual Reports<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#annual-reports">2022-2023</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#annual-reports">2023-2024</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#annual-reports">2024-2025</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#annual-reports">2025-2026</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Investor Presentations<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#presentations">Investor Presentations</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#presentations">Earnings Call transcripts</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#presentations">Audio Recordings of Earnings Call</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Governance<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#governance">Board of Directors</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#governance">Committees of the Board</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#governance">Terms of appointment of Independent Directors</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#governance">Familiarization Programme</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#governance">Policies</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#governance">Corporate Social Responsibility</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#governance">MOA &amp; AOA</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Shareholders Information<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#shareholder-info">Shareholding pattern</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#shareholder-info">Annual General Meeting (AGM)</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#shareholder-info">Extra Ordinary General Meeting (EGM)</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#shareholder-info">Postal Ballot</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Stock Exchange Releases<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#exchange-releases">Board Meeting Outcome</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#exchange-releases">Investors Meeting</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#exchange-releases">Other General Announcement</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem is-open">
+              <strong class="fz_24 show">Investors Relations<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li class="checked_li"><label class="carrer"><input type="checkbox" class="page_id_checkbox" checked><span class="checkmark"></span></label><a href="#">Registered Office Details</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#">Company Secretary &amp; Compliance Officer</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#">Registrar and Transfer Agents</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#">Online Dispute Resolution (ODR) Portal</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">IPO Documents<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#ipo-documents">category not required, all IPO related doc will be uploded</a></li>
+              </ul>
+            </li>
+
+            <li class="filter-item filterItem">
+              <strong class="fz_24">Disclosures under Regulation 46 of the SEBI LODR<span class="caret"><i class="fas fa-chevron-down"></i></span></strong>
+              <ul class="filterList filter-item-inner">
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Details of business</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Memorandum of Association and Articles of Association</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Certificate of Incorporation</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Brief profile of board of directors including directors&rsquo; expertise</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Terms and conditions of appointment of independent directors</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Composition of various committees of board of directors</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Code of conduct of board of directors and senior management personnel</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Details of establishment of vigil mechanism / whistle blower policy</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Criteria of making payments to non-executive directors</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Policy on dealing with related party transactions</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Policy for determining &lsquo;material&rsquo; subsidiaries</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Details of familiarization programmes imparted to independent directors</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Email address for grievance redressal</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Contact information of the designated officials</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Financial results</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Shareholding pattern</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Schedule of analyst or institutional investor meet</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Audio / video recordings of analyst meet</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">New name and old name of the listed entity</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Separate audited financial statements of subsidiaries</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Contact details of KMP</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Disclosures under Regulation 30(8)</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Statements of deviation or variation</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Dividend Distribution Policy</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Annual Return (Section 92)</a></li>
+                <li><label class="carrer"><input type="checkbox" class="page_id_checkbox"><span class="checkmark"></span></label><a href="#regulation-46">Employee Benefit Scheme documents</a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- ===== Right content ===== -->
+      <div class="col-lg-9 col-md-8 invMain">
+        <div class="job-secc investor-right invEachRow" id="main-17">
+          <h2></h2>
+
+          <ul class="row">
+
+            <li class="col-xl-6 irContent">
+              <h3>Registered Office:</h3>
+              <div class="bodBox2">
+                <div>
+                  <h4>Canarys Automations Limited</h4>
+                  <p>No. 566 &amp; 567, 2nd Floor, 30th Main, Attimabbe Road,<br>Banagirinagara, Banashankari 3rd Stage, Bengaluru &#8211; 560 077, India</p>
+                  <p>CIN: L31101KA1991PLC012096</p>
+                  <p class="call"><i class="fa fa-envelope"></i><a href="mailto:info@ecanarys.com">info@ecanarys.com</a></p>
+                  <p class="call"><i class="fa fa-phone"></i><a href="tel:+919845862780">+91 98458 62780</a></p>
+                  <p class="call"><i class="fa fa-globe"></i><a href="https://ecanarys.com/">https://ecanarys.com/</a></p>
+                </div>
+              </div>
+            </li>
+
+            <li class="col-xl-6 irContent">
+              <h3>Contact Information:</h3>
+              <div class="bodBox2">
+                <div>
+                  <h4>Ms. Ambikeshwari M A</h4>
+                  <p>Company Secretary and Compliance Officer<br>Canarys Automations Limited<br>No. 566 &amp; 567, 2nd Floor, 30th Main, Attimabbe Road,<br>Banagirinagara, Banashankari 3rd Stage, Bengaluru &#8211; 560 077, India</p>
+                  <p>CIN: L31101KA1991PLC012096</p>
+                  <p class="call"><i class="fa fa-envelope"></i><a href="mailto:investors@ecanarys.com">investors@ecanarys.com</a></p>
+                  <p class="call"><i class="fa fa-phone"></i><a href="tel:+919845862780">+91 98458 62780</a></p>
+                  <p class="call"><i class="fa fa-globe"></i><a href="https://ecanarys.com/">https://ecanarys.com/</a></p>
+                </div>
+              </div>
+            </li>
+
+            <li class="col-xl-6 irContent">
+              <h3></h3>
+              <div class="bodBox2">
+                <div>
+                  <h4>Link Intime India Private Limited</h4>
+                  <p>C-101, 1st Floor, 247 Park, Lal Bahadur Shastri Marg,<br>Vikhroli (West), Mumbai, Maharashtra, India &#8211; 400 083</p>
+                  <p class="call"><i class="fa fa-envelope"></i><a href="mailto:canarys.ipo@linkintime.co.in">canarys.ipo@linkintime.co.in</a></p>
+                  <p class="call"><i class="fa fa-phone"></i><a href="tel:+912249186270">+91 22 4918 6270</a></p>
+                  <p class="call">RTA Website:<br><a href="https://linkintime.co.in">https://linkintime.co.in</a></p>
+                </div>
+              </div>
+            </li>
+
+            <li class="col-xl-6 irContent">
+              <h3></h3>
+              <div class="bodBox2">
+                <div>
+                  <h4>Nodal Officer under IEPF Rules</h4>
+                  <p>Ms. Ambikeshwari M A</p>
+                  <p>Company Secretary</p>
+                  <p class="call"><i class="fa fa-envelope"></i><a href="mailto:investors@ecanarys.com">investors@ecanarys.com</a></p>
+                </div>
+              </div>
+            </li>
+
+            <li class="col-xl-6 irContent">
+              <h3></h3>
+              <div class="bodBox2">
+                <div>
+                  <h4>Online Dispute Resolution (ODR) Portal</h4>
+                  <p>According to SEBI Circular No. <a href="https://smartodr.in/login" target="_blank" rel="noopener">SEBI/HO/OIAE/OIAE_IAD-1/P/CIR/2023/131</a> dated July 31, 2023 a portal &#8211; SMART ODR Portal (Securities Market Approach for Resolution Through ODR Portal) has now been activated. This platform is designed to enhance investor grievance redressal by enabling investors to access Online Dispute Resolution Institutions for the resolution of their complaints.</p>
+                  <p>Link to ODR Portal for Dispute Resolution:</p>
+                  <p class="call"><i class="fa fa-globe"></i><a href="https://smartodr.in/login">https://smartodr.in/login</a></p>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="contact_sec" id="footContact">
+  <div class="container-lg">
+    <div class="contact_form_area">
+      <div class="page-heading">
+        <h2>CONTACT US</h2>
+        <h3>Get in touch</h3>
+      </div>
+      <div class="contact_txt">
+        <p>Do you have a question relating to your shareholding, dividends, or disclosures? Looking for a filing you can&rsquo;t find? Get in touch with our investor relations desk.</p>
+      </div>
+
+      <form class="contact-form" onsubmit="event.preventDefault(); this.reset(); alert('Thank you — your message has been noted.');">
+        <div class="contact_frm">
+          <div class="contact_input w_33"><input type="text" placeholder="Name" required></div>
+          <div class="contact_input w_33"><input type="email" placeholder="Email" required></div>
+          <div class="contact_input w_33"><input type="text" placeholder="Contact Number" maxlength="10"></div>
+
+          <div class="contact_input w_50">
+            <select required>
+              <option value="" disabled selected>Select Country</option>
+              <option>India</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="contact_input w_50">
+            <select required>
+              <option value="" disabled selected>Select State</option>
+              <option>Karnataka</option>
+              <option>Maharashtra</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="contact_input w_50"><input type="text" placeholder="City" required></div>
+          <div class="contact_input w_50">
+            <select required>
+              <option value="" disabled selected>Select Your Subject</option>
+              <option>Shareholder Enquiry</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+
+          <div class="contact_input w_100">
+            <select required>
+              <option value="" disabled selected>&mdash;Please choose an option&mdash;</option>
+              <option>Shareholding / Dividend</option>
+              <option>Annual Report / AGM</option>
+              <option>Disclosures &amp; Filings</option>
+              <option>Media / Analyst Enquiry</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="contact_input w_100"><textarea placeholder="Message" rows="5"></textarea></div>
+
+          <div class="contact_input captch_input w_100">
+            <span class="captcha-box">4 K 9 P</span>
+            <input type="text" placeholder="Enter Captcha*" maxlength="4" style="max-width:160px;">
+          </div>
+
+          <div class="contact_input_submit w_100">
+            <input class="contact_submit" type="submit" value="Submit">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer id="siteFooter">
+  <div class="hf-f-brand">
+    <img src="https://ecanarys.com/assets/images/canarys-logo.png" alt="Canarys" style="height:42px;overflow:hidden;">
+    <div class="hf-f-tag">Engineering Certainty. Agentic AI. 30 years of depth, AI-native today.</div>
+  </div>
+  <div class="hf-f-nav">
+    <div class="hf-fc">
+      <h4>CAR Framework</h4>
+      <ul>
+        <li><a href="https://ecanarys.com/#car">CAR-D · Design</a></li>
+        <li><a href="https://ecanarys.com/#car">CAR-E · Engineering</a></li>
+        <li><a href="https://ecanarys.com/#car">CAR-T · Testing</a></li>
+        <li><a href="https://ecanarys.com/#car">CAR-S · Support</a></li>
+      </ul>
+    </div>
+    <div class="hf-fc">
+      <h4>Solutions</h4>
+      <ul>
+        <li><a href="https://ecanarys.com/digital-devops-solutions/">Digital DevOps</a></li>
+        <li><a href="https://ecanarys.com/digital-assurance-solutions/">Digital Assurance</a></li>
+        <li><a href="https://ecanarys.com/cloud-services/">Cloud Services</a></li>
+        <li><a href="https://ecanarys.com/digitalization-solutions/">Digitalization</a></li>
+        <li><a href="https://ecanarys.com/modernization-solutions/">Modernization</a></li>
+        <li><a href="https://ecanarys.com/intelligence-solutions/">Intelligence</a></li>
+        <li><a href="https://ecanarys.com/automation-solutions/">Automation</a></li>
+        <li><a href="https://ecanarys.com/transformation-solutions/">Transformation</a></li>
+        <li><a href="https://ecanarys.com/telemetry-solutions/">Telemetry</a></li>
+      </ul>
+    </div>
+    <div class="hf-fc">
+      <h4>Industries</h4>
+      <ul>
+        <li><a href="https://ecanarys.com/bfsi/">BFSI</a></li>
+        <li><a href="https://ecanarys.com/healthcare/">Healthcare</a></li>
+        <li><a href="https://ecanarys.com/manufacturing/">Manufacturing</a></li>
+        <li><a href="https://ecanarys.com/pharmaceuticals/">Pharmaceuticals</a></li>
+        <li><a href="https://ecanarys.com/insurance/">Insurance</a></li>
+        <li><a href="https://ecanarys.com/retail/">Retail</a></li>
+        <li><a href="https://ecanarys.com/water-resources-management/">Water Resources</a></li>
+      </ul>
+    </div>
+    <div class="hf-fc">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="https://ecanarys.com/about-us/">About Us</a></li>
+        <li><a href="https://ecanarys.com/leadership/">Leadership</a></li>
+        <li><a href="https://ecanarys.com/board-of-directors/">Board of Directors</a></li>
+        <li><a href="https://ecanarys.com/careers/">Careers</a></li>
+        <li><a href="https://ecanarys.com/blogs/">Blogs</a></li>
+        <li><a href="https://ecanarys.com/culture/">Culture</a></li>
+        <li><a href="https://ecanarys.com/contact-us/">Contact Us</a></li>
+        <li><a href="https://ecanarys.com/innovation/">Innovation</a></li>
+        <li><a href="https://ecanarys.com/technology/">Technology</a></li>
+      </ul>
+    </div>
+    <div class="hf-fc">
+      <h4>Investor</h4>
+      <ul>
+        <li><a href="https://ecanarys.com/Red-Herring-Prospectus.pdf" target="_blank" rel="noopener">Red Herring Prospectus</a></li>
+        <li><a href="https://ecanarys.com/Investors-DRHP.pdf" target="_blank" rel="noopener">DRHP</a></li>
+        <li><a href="https://ecanarys.com/statutory-filings/">Statutory Filings</a></li>
+        <li><a href="https://ecanarys.com/investor-presentations/">Investor Presentations</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="hf-f-bottom">
+    <span>© 2026 Canarys Automations. All rights reserved.</span>
+    <span>ecanarys.com</span>
+  </div>
+</footer>
+
+<script>
+  // Accordion behaviour for the sidebar category filter groups
+  document.querySelectorAll('.filter-item > .fz_24').forEach(function(label){
+    var item = label.closest('.filter-item');
+    var list = item.querySelector('.filterList');
+    // set initial state
+    if(item.classList.contains('is-open')){
+      list.style.maxHeight = list.scrollHeight + 'px';
+    }
+    label.addEventListener('click', function(){
+      var isOpen = item.classList.contains('is-open');
+      if(isOpen){
+        item.classList.remove('is-open');
+        list.style.maxHeight = '0px';
+      } else {
+        item.classList.add('is-open');
+        list.style.maxHeight = list.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // Sub-links: mark visited/checked and navigate to the relevant section
+  document.querySelectorAll('.filterList li a').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var li = link.closest('li');
+      var checkbox = li.querySelector('.page_id_checkbox');
+      document.querySelectorAll('.filterList li.checked_li').forEach(function(l){ l.classList.remove('checked_li'); });
+      document.querySelectorAll('.page_id_checkbox').forEach(function(c){ c.checked = false; });
+      li.classList.add('checked_li');
+      if(checkbox) checkbox.checked = true;
+      var href = link.getAttribute('href');
+      if(href && href.startsWith('#') && href.length > 1){
+        e.preventDefault();
+        var target = document.querySelector(href);
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
+
+ 
